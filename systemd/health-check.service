@@ -1,0 +1,12 @@
+[Unit]
+Description=Network Proxy Health Check
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/health-check.sh
+StandardOutput=journal
+StandardError=journal
+
+# 失败时发送通知
+OnFailure=health-check-alert@%n.service

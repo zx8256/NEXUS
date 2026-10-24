@@ -1,0 +1,11 @@
+[Unit]
+Description=Network Proxy Health Check Timer
+Requires=health-check.service
+
+[Timer]
+# 每分钟执行一次
+OnBootSec=1min
+OnUnitActiveSec=1min
+
+[Install]
+WantedBy=timers.target

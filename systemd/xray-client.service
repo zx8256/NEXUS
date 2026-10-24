@@ -1,0 +1,28 @@
+[Unit]
+Description=Xray Client Service (VLESS Reality Proxy)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/xray run -config /etc/xray-client-443-final.json
+
+# 自动重启配置
+Restart=always
+RestartSec=30
+
+# 防止无限重启
+StartLimitBurst=5
+StartLimitIntervalSec=300
+
+# 日志配置
+StandardOutput=journal
+StandardError=journal
+
+# 资源限制
+MemoryLimit=512M
+TasksMax=256
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,24 @@
+[Unit]
+Description=SSH Reverse Tunnel to Proxy Server
+After=network-online.target sshd.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/ssh -N -R 18080:localhost:8080 -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes root@85.237.207.157
+
+# 自动重启配置（延长间隔防止 VPS 封禁）
+Restart=always
+RestartSec=60
+
+# 防止无限重启
+StartLimitBurst=5
+StartLimitIntervalSec=600
+
+# 日志配置
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
